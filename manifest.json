@@ -6,12 +6,13 @@
   "js": "index.js",
   "css": "style.css",
   "author": "Youngbin",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "auto_update": false,
   "generate_interceptor": "stGlobalPromptToggleInterceptor",
   "hooks": {
     "disable": "onDisable",
     "delete": "onDisable",
     "enable": "onEnable"
-  }
+  },
+  "homePage": "https://github.com/hy264b-hub/prompt-toggle"
 }
