@@ -1,0 +1,17 @@
+{
+  "display_name": "공통 프롬프트 토글",
+  "loading_order": 100,
+  "requires": [],
+  "optional": [],
+  "js": "index.js",
+  "css": "style.css",
+  "author": "Youngbin",
+  "version": "1.0.0",
+  "auto_update": false,
+  "generate_interceptor": "stGlobalPromptToggleInterceptor",
+  "hooks": {
+    "disable": "onDisable",
+    "delete": "onDisable",
+    "enable": "onEnable"
+  }
+}

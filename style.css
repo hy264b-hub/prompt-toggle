@@ -1,0 +1,20 @@
+#st-global-prompt-toggle { margin: 8px 0; color: var(--SmartThemeBodyColor, inherit); }
+#st-global-prompt-toggle .gpt-panel { border: 1px solid var(--SmartThemeBorderColor, #7776); border-radius: 12px; overflow: hidden; background: var(--SmartThemeBlurTintColor, #202026); }
+#st-global-prompt-toggle summary { cursor: pointer; padding: 10px 0; }
+#st-global-prompt-toggle .gpt-panel > summary { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 14px; font-weight: 600; }
+#st-global-prompt-toggle [data-badge] { border: 1px solid currentColor; border-radius: 20px; padding: 2px 10px; font-size: 12px; opacity: .6; }
+#st-global-prompt-toggle[data-enabled="true"] [data-badge] { color: #9de6c1; opacity: 1; }
+#st-global-prompt-toggle .gpt-body { padding: 0 14px 14px; display: grid; gap: 10px; }
+#st-global-prompt-toggle p { margin: 0; line-height: 1.55; }
+#st-global-prompt-toggle .gpt-muted, #st-global-prompt-toggle .gpt-meta { font-size: .85em; opacity: .7; }
+#st-global-prompt-toggle .gpt-toggle, #st-global-prompt-toggle .gpt-meta { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+#st-global-prompt-toggle .gpt-toggle { padding: 12px 0; }
+#st-global-prompt-toggle input[type="checkbox"] { width: 19px; height: 19px; flex-shrink: 0; accent-color: #66b592; }
+#st-global-prompt-toggle textarea { width: 100%; min-height: 170px; resize: vertical; line-height: 1.6; box-sizing: border-box; margin: 0; }
+#st-global-prompt-toggle select, #st-global-prompt-toggle input[type="number"] { width: 100%; box-sizing: border-box; margin: 6px 0; }
+#st-global-prompt-toggle .gpt-check { display: flex; align-items: center; gap: 8px; margin: 12px 0; }
+#st-global-prompt-toggle .gpt-status { border-left: 3px solid #66b592; padding: 8px 10px; font-size: .9em; background: #80808014; }
+#st-global-prompt-toggle [data-error="true"] { border-color: #e89c87; }
+#st-global-prompt-toggle pre { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 260px; overflow: auto; padding: 10px; border: 1px solid #80808040; font: inherit; font-size: .9em; }
+#st-global-prompt-toggle [hidden] { display: none !important; }
+#st-global-prompt-toggle :focus-visible { outline: 2px solid #66b592; outline-offset: 3px; }

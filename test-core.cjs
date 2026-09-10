@@ -1,0 +1,21 @@
+const vm=require('node:vm'),fs=require('node:fs'),assert=require('node:assert/strict');
+const source=fs.readFileSync(require('node:path').join(__dirname,'index.js'),'utf8').replaceAll('export function','function');
+const KEY='st_global_prompt_toggle_v1';
+const ctx={extensionSettings:{},extensionPrompts:{other:{value:'preserve'}},setExtensionPrompt(key,value,position,depth,scan,role){this.extensionPrompts[key]={value,position,depth,scan,role}}};
+const sandbox={console,SillyTavern:{getContext:()=>ctx},document:{readyState:'loading',addEventListener(){}}};
+vm.createContext(sandbox);vm.runInContext(source,sandbox);
+const run=(type='normal')=>sandbox.stGlobalPromptToggleInterceptor([],4096,()=>{throw Error('unexpected abort')},type);
+run();assert.equal(ctx.extensionPrompts[KEY],undefined);
+const s=ctx.extensionSettings[KEY];s.text='추가 지시문';s.enabled=true;run();assert.equal(ctx.extensionPrompts[KEY].value,s.text);assert.equal(ctx.extensionPrompts[KEY].depth,0);
+s.position='before';run();assert.equal(ctx.extensionPrompts[KEY].depth,1);
+s.position='custom';s.depth=4;s.role=2;run();assert.equal(ctx.extensionPrompts[KEY].depth,4);assert.equal(ctx.extensionPrompts[KEY].role,2);
+for(let i=0;i<20;i++)run();assert.equal(Object.keys(ctx.extensionPrompts).length,2);
+run('quiet');assert.equal(ctx.extensionPrompts[KEY],undefined);run('swipe');assert.equal(ctx.extensionPrompts[KEY].value,s.text);
+s.includeQuiet=true;run('quiet');assert.equal(ctx.extensionPrompts[KEY].value,s.text);
+s.enabled=false;for(const type of ['normal','swipe','regenerate','continue','quiet']){run(type);assert.equal(ctx.extensionPrompts[KEY],undefined)}
+s.enabled=true;ctx.extensionSettings=JSON.parse(JSON.stringify(ctx.extensionSettings));ctx.extensionPrompts={};run();assert.equal(ctx.extensionPrompts[KEY].depth,4);
+ctx.extensionSettings[KEY].text=' ';run();assert.equal(ctx.extensionPrompts[KEY],undefined);
+ctx.extensionSettings[KEY].text='hello';ctx.extensionSettings[KEY].depth=-5;run();assert.equal(ctx.extensionPrompts[KEY].depth,0);
+ctx.extensionSettings[KEY].depth=10001;run();assert.equal(ctx.extensionPrompts[KEY].depth,10000);
+sandbox.onDisable();run();assert.equal(ctx.extensionPrompts[KEY],undefined);
+console.log('PASS core: ON/OFF, all positions/roles, bounds, repeated calls, quiet opt-in, reload JSON persistence, context reset, blank text, disable lifecycle. Mocked host API.');
